@@ -73,7 +73,7 @@ function Home() {
                 <li>User and Admin use different endpoints for login</li>
                 <li><b>Extern API</b> use five different extern REST API endpoints through backend.</li>
                 <li>Make sure to have backend running locally or delpoyet, and adjust link(s) in <b>settings.js</b></li>
-                <li>Link to backend startcode: <a href="https://github.com/sslhansen/3semCA3backend">Backend Startcode</a> </li>
+                <li>Link to backend startcode: <a href="https://github.com/SebastianBentley/3SemProject">Backend Startcode</a> </li>
             </ul>
         </div>
     )

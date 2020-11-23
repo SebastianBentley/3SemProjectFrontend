@@ -23,12 +23,24 @@ function DoLogin({ loggedIn, setLoggedIn, goHome }) {
         goHome();
     }
 
+    const registerUser = (user, pass) => {
+        loginFacade.registerUser(user, pass).then(res => setLoggedIn(true)).catch(err => {
+            if (err.status) {
+                err.fullError.then(e => setErrorMsg(e.message));
+            }
+        });
+        goHome();
+    }
+
 
     return (
         <div> {
             !loggedIn ? (
-                <div><LogIn login={login} /><p>{errorMsg}</p>
+                <div>
+                    <LogIn login={login} registerUser={registerUser} /><p>{errorMsg}</p>
                 </div>
+
+
             ) : (
                     <div>
                         <LoggedIn />
@@ -39,7 +51,7 @@ function DoLogin({ loggedIn, setLoggedIn, goHome }) {
     )
 }
 
-function LogIn({ login }) {
+function LogIn({ login, registerUser }) {
     const init = {
         username: "",
         password: ""
@@ -50,6 +62,13 @@ function LogIn({ login }) {
         evt.preventDefault();
         login(loginCredentials.username, loginCredentials.password);
     }
+
+    const performRegister = (evt) => {
+        evt.preventDefault();
+        registerUser(loginCredentials.username, loginCredentials.password);
+    }
+
+
     const onChange = (evt) => {
         setLoginCredentials({
             ...loginCredentials,
@@ -64,6 +83,7 @@ function LogIn({ login }) {
                 <input placeholder="User Name" id="username" />
                 <input placeholder="Password" id="password" />
                 <button onClick={performLogin}>Login</button>
+                <button onClick={performRegister}>New User</button>
             </form>
         </div>
     )
@@ -76,7 +96,7 @@ function LoggedIn() {
         loginFacade.fetchData().then(data => setDataFromServer(data.msg));
     }, [])
 
-   
+
 
     return (
         <div>

@@ -33,6 +33,17 @@ function apiFacade() { /* Insert utility-methods from a latter step (d) here (RE
             setToken(res.token)
         })
     }
+
+    const registerUser = (user, password) => {
+        const options = makeOptions("POST", true, {
+            username: user,
+            password: password
+        });
+        return fetch(URL + "/api/login/createUser", options).then(handleHttpErrors).then(res => {
+            setToken(res.token)
+        })
+    }
+
     const fetchData = () => {
         const options = makeOptions("GET", true); // True add's the token
         var base64Url = getToken().split('.')[1];
@@ -77,6 +88,7 @@ function apiFacade() { /* Insert utility-methods from a latter step (d) here (RE
         getToken,
         loggedIn,
         login,
+        registerUser,
         logout,
         fetchData,
         fetchExternData
