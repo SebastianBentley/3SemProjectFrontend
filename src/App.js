@@ -83,14 +83,12 @@ function MovieSearch() {
     const [data, setData] = useState(null);
     const { strategy } = useParams();
     const [movieTitle, setMovieTitle] = useState("");
-    const [toShow, setToShow] = useState("");
-
-    //const foundData = () => loginFacade.fetchExternData().then(res => setData(res));
 
     function handleChange(event) {
         const value = event.target.value;
         setMovieTitle(value);
     }
+
     function handleSubmit(event) {
         event.preventDefault();
         setData(null);
@@ -100,31 +98,30 @@ function MovieSearch() {
                     console.log(err.message);
                 }
             });
-
-        setToShow(data ? (
-
-            <div className="SearchResults">
-                <h3>{data.Title}</h3>
-                <div className="SearchRes1">
-                    <p><b>Year:</b> {data.Year}</p>
-                    <p><b>Genre:</b> {data.Genre}</p>
-                    <p><b>Directors:</b> {data.Director}</p>
-                    <p><b>Writers:</b> {data.Writer}</p>
-                    <p><b>Actors:</b> {data.Actors}</p>
-                    <p><b>Description:</b> {data.Plot}</p>
-                </div>
-                <div className="SearchRes2">
-                    <img src={data.Poster}></img>
-                    <p>Ratings: brug map</p>
-                    <p><b>Metascore:</b> {data.Metascore}</p>
-                    <p><b>imdbRating:</b> {data.imdbRating}</p>
-                    <p><b>imdbVotes:</b> {data.imdbVotes}</p>
-                    <p><b>imdbID:</b> {data.imdbID}</p>
-                </div>
-            </div>
-        ) : "Loading...")
     }
 
+    const toShow = data ? (
+
+        <div className="SearchResults">
+            <h3>{data.Title}</h3>
+            <div className="SearchRes1">
+                <p><b>Year:</b> {data.Year}</p>
+                <p><b>Genre:</b> {data.Genre}</p>
+                <p><b>Directors:</b> {data.Director}</p>
+                <p><b>Writers:</b> {data.Writer}</p>
+                <p><b>Actors:</b> {data.Actors}</p>
+                <p><b>Description:</b> {data.Plot}</p>
+            </div>
+            <div className="SearchRes2">
+                <img src={data.Poster}></img>
+                <p>Ratings: brug map</p>
+                <p><b>Metascore:</b> {data.Metascore}</p>
+                <p><b>imdbRating:</b> {data.imdbRating}</p>
+                <p><b>imdbVotes:</b> {data.imdbVotes}</p>
+                <p><b>imdbID:</b> {data.imdbID}</p>
+            </div>
+        </div>
+    ) : ""
 
     return (
         <div>
