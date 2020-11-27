@@ -76,9 +76,9 @@ function apiFacade() { /* Insert utility-methods from a latter step (d) here (RE
         return opts;
     }
 
-    const fetchExternData = () => {
+    const fetchMovieData = (title) => {
         const options = makeOptions("GET", true); // True add's the token
-        return fetch(URL + "/api/info/extern", options).then(handleHttpErrors);
+        return fetch(URL + "/api/movie/search/" + title, options).then(handleHttpErrors);
     }
 
 
@@ -91,8 +91,8 @@ function apiFacade() { /* Insert utility-methods from a latter step (d) here (RE
         registerUser,
         logout,
         fetchData,
-        fetchExternData
+        fetchMovieData
     }
 }
-const loginFacade = apiFacade();
-export default loginFacade;
+const facade = apiFacade();
+export default facade;

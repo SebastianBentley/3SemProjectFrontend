@@ -43,3 +43,26 @@
     transform: rotate(360deg);
   }
 }
+
+.Search {
+  text-align: center;
+}
+
+.SearchResults {
+  margin: auto;
+  width: 50%;
+}
+
+h3 {
+  text-align: center;
+}
+
+.SearchRes1 {
+  float: left;
+  width: 50%;
+}
+.SearchRes2 {
+  float: right;
+  text-align: right;
+  width: 50%;
+}

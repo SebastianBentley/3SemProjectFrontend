@@ -10,7 +10,7 @@ import {
     useLocation,
     useHistory
 } from "react-router-dom";
-import loginFacade from './apiFacade';
+import facade from './apiFacade';
 
 function App() {
     const [isLoggedIn, setLoggedIn] = useState(false)
@@ -31,8 +31,8 @@ function App() {
                 <Route exact path="/login">
                     <DoLogin loggedIn={isLoggedIn} setLoggedIn={setLoggedIn} goHome={goHome} />
                 </Route>
-                <Route exact path="/externData">
-                    <ExternData />
+                <Route exact path="/movieSearch">
+                    <MovieSearch />
                 </Route>
                 <Route>
                     <NoMatch />
@@ -50,7 +50,7 @@ function Header({ isLoggedIn, loginMsg }) {
                 <NavLink exact activeClassName="active" to="/">Home</NavLink>
             </li>
             <li>
-                <NavLink activeClassName="active" to="/externData">Extern API</NavLink>
+                <NavLink activeClassName="active" to="/movieSearch">Movie Surge</NavLink>
             </li>
             <li>
                 <NavLink activeClassName="active" to="/login">
@@ -79,53 +79,60 @@ function Home() {
     )
 }
 
-function ExternData() {
+function MovieSearch() {
     const [data, setData] = useState(null);
     const { strategy } = useParams();
+    const [movieTitle, setMovieTitle] = useState("");
+    const [toShow, setToShow] = useState("");
 
     //const foundData = () => loginFacade.fetchExternData().then(res => setData(res));
 
-    useEffect(() => {
+    function handleChange(event) {
+        const value = event.target.value;
+        setMovieTitle(value);
+    }
+    function handleSubmit(event) {
+        event.preventDefault();
         setData(null);
-        loginFacade.fetchExternData().then(res => setData(res))
+        facade.fetchMovieData(movieTitle).then(res => setData(res))
             .catch(err => {
                 if (err.status) {
                     console.log(err.message);
                 }
             });
 
-    }, [])
+        setToShow(data ? (
 
-    const toShow = data ? (
-        <div>
-            <h3>Todo if bored:</h3>
-            <p>Activity: {data.activity}</p>
-            <p>Type: {data.type}</p>
-            <p>Price {data.price}</p>
-            <p>Reference: https://www.boredapi.com/api/activity</p>
+            <div className="SearchResults">
+                <h3>{data.Title}</h3>
+                <div className="SearchRes1">
+                    <p><b>Year:</b> {data.Year}</p>
+                    <p><b>Genre:</b> {data.Genre}</p>
+                    <p><b>Directors:</b> {data.Director}</p>
+                    <p><b>Writers:</b> {data.Writer}</p>
+                    <p><b>Actors:</b> {data.Actors}</p>
+                    <p><b>Description:</b> {data.Plot}</p>
+                </div>
+                <div className="SearchRes2">
+                    <img src={data.Poster}></img>
+                    <p>Ratings: brug map</p>
+                    <p><b>Metascore:</b> {data.Metascore}</p>
+                    <p><b>imdbRating:</b> {data.imdbRating}</p>
+                    <p><b>imdbVotes:</b> {data.imdbVotes}</p>
+                    <p><b>imdbID:</b> {data.imdbID}</p>
+                </div>
+            </div>
+        ) : "Loading...")
+    }
 
-            <h3>Random Food picture</h3>
-            <p><img src={data.foodImage}></img></p>
-            <p>Reference: https://foodish-api.herokuapp.com/api</p>
-
-            <h3>Random Dog picture</h3>
-            <p><img src={data.dogPicture}></img></p>
-            <p>Reference: https://dog.ceo/api/breeds/image/random</p>
-
-            <h3>Kanye Says</h3>
-            <em>"{data.kanyeSays}"</em>
-            <p>Reference: https://api.kanye.rest/</p>
-
-            <h3>{data.author} Says</h3>
-            <em>"{data.programmerQuote}"</em>
-            <p>Reference: https://programming-quotes-api.herokuapp.com/quotes/random</p>
-
-        </div>
-    ) : "Loading..."
 
     return (
         <div>
-            <h2>data from server</h2>
+            <form className="Search">
+                <h2>Movie Search</h2>
+                <input placeholder="Movie title" id="movieSearch" value={movieTitle} onChange={handleChange} />
+                <button onClick={handleSubmit}>Search</button>
+            </form>
             {toShow}
         </div>
     )

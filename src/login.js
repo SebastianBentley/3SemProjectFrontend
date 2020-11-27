@@ -1,4 +1,4 @@
-import loginFacade from "./apiFacade.js"
+import facade from "./apiFacade.js"
 import React, { useState, useEffect } from "react";
 
 
@@ -8,14 +8,14 @@ function DoLogin({ loggedIn, setLoggedIn, goHome }) {
 
 
     const logout = () => {
-        loginFacade.logout()
+        facade.logout()
         setLoggedIn(false)
         setErrorMsg('')
         goHome();
     }
 
     const login = (user, pass) => {
-        loginFacade.login(user, pass).then(res => setLoggedIn(true)).catch(err => {
+        facade.login(user, pass).then(res => setLoggedIn(true)).catch(err => {
             if (err.status) {
                 err.fullError.then(e => setErrorMsg(e.message));
             }
@@ -24,7 +24,7 @@ function DoLogin({ loggedIn, setLoggedIn, goHome }) {
     }
 
     const registerUser = (user, pass) => {
-        loginFacade.registerUser(user, pass).then(res => setLoggedIn(true)).catch(err => {
+        facade.registerUser(user, pass).then(res => setLoggedIn(true)).catch(err => {
             if (err.status) {
                 err.fullError.then(e => setErrorMsg(e.message));
             }
@@ -93,7 +93,7 @@ function LoggedIn() {
     const [dataFromServer, setDataFromServer] = useState("Loading...")
 
     useEffect(() => {
-        loginFacade.fetchData().then(data => setDataFromServer(data.msg));
+        facade.fetchData().then(data => setDataFromServer(data.msg));
     }, [])
 
 
