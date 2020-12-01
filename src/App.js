@@ -81,24 +81,74 @@ function Home() {
 
 function MovieSearch() {
     const [data, setData] = useState(null);
+    const [votes, setVotes] = useState({ upvotes: 0, downvotes: 0 });
     const { strategy } = useParams();
     const [movieTitle, setMovieTitle] = useState("");
+    const [isUpvoted, setIsUpvoted] = useState(false);
+    const [isDownvoted, setIsDownvoted] = useState(false);
 
     function handleChange(event) {
         const value = event.target.value;
         setMovieTitle(value);
     }
 
+
+
     function handleSubmit(event) {
         event.preventDefault();
         setData(null);
-        facade.fetchMovieData(movieTitle).then(res => setData(res))
+        setVotes(null);
+
+
+
+        facade.fetchMovieData(movieTitle).then(res => setData(res)).then()
             .catch(err => {
                 if (err.status) {
                     console.log(err.message);
                 }
             });
+
+        facade.getVotes(movieTitle).then(res => setVotes(res)).then()
+            .catch(err => {
+                if (err.status) {
+                    console.log(err.message);
+                }
+            });
+
+
     }
+
+    function upvote(event) {
+        event.preventDefault();
+        facade.upvote(data.Title).then()
+            .catch(err => {
+                if (err.status) {
+                    console.log(err.message);
+                }
+            });
+        setVotes({ upvotes: votes.upvotes + 1, downvotes: votes.downvotes})
+        setIsUpvoted(true);
+    }
+
+    function downvote(event) {
+        event.preventDefault();
+        facade.downvote(data.Title).then()
+            .catch(err => {
+                if (err.status) {
+                    console.log(err.message);
+                }
+            });
+        setVotes({ upvotes: votes.upvotes, downvotes: votes.downvotes + 1 })
+        setIsDownvoted(true);
+    }
+
+    const upVoteButton = isUpvoted ? (
+        <button disabled="disabled" style={{ backgroundColor: "lightgreen" }} onClick={upvote}>Upvote</button>
+    ) : <button onClick={upvote}>Upvote</button>;
+
+    const downVoteButton = isDownvoted ? (
+        <button disabled="disabled" onClick={downvote}>Upvote</button>
+    ) : <button onClick={downvote}>Downvote</button>;
 
     const toShow = data ? (
 
@@ -114,12 +164,21 @@ function MovieSearch() {
             </div>
             <div className="SearchRes2">
                 <img src={data.Poster}></img>
-                <p>Ratings: brug map</p>
+                <p><b>User Rating: </b> yay: {votes.upvotes} nay: {votes.downvotes}</p>
+                {upVoteButton}
+                {downVoteButton}
+                <p><b>Ratings:</b> </p>
+                {data.Ratings.map(x =>
+                    <p key={x.Source}><b>{x.Source}</b> : {x.Value}</p>
+                )}
                 <p><b>Metascore:</b> {data.Metascore}</p>
                 <p><b>imdbRating:</b> {data.imdbRating}</p>
                 <p><b>imdbVotes:</b> {data.imdbVotes}</p>
                 <p><b>imdbID:</b> {data.imdbID}</p>
+
             </div>
+
+
         </div>
     ) : ""
 

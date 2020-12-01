@@ -81,6 +81,25 @@ function apiFacade() { /* Insert utility-methods from a latter step (d) here (RE
         return fetch(URL + "/api/movie/search/" + title, options).then(handleHttpErrors);
     }
 
+    const upvote = (title) => {
+        const options = makeOptions("POST", true, {
+            Title: title
+        });
+        return fetch(URL + "/api/movie/rating/upvote", options).then(handleHttpErrors);
+    }
+
+    const downvote = (title) => {
+        const options = makeOptions("POST", true, {
+            Title: title
+        });
+        return fetch(URL + "/api/movie/rating/downvote", options).then(handleHttpErrors);
+    }
+
+    const getVotes = (title) => {
+        const options = makeOptions("GET", true);
+        return fetch(URL + "/api/movie/rating/getrating/" + title, options).then(handleHttpErrors);
+    }
+
 
     return {
         makeOptions,
@@ -91,7 +110,10 @@ function apiFacade() { /* Insert utility-methods from a latter step (d) here (RE
         registerUser,
         logout,
         fetchData,
-        fetchMovieData
+        fetchMovieData,
+        upvote,
+        downvote,
+        getVotes
     }
 }
 const facade = apiFacade();
