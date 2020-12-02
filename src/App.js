@@ -18,6 +18,19 @@ function App() {
   const goHome = () => {
     history.push("/");
   };
+  const LoginRoute = () => {
+    if (isLoggedIn) {
+      return <React.Fragment>
+        <Route exact path="/profilePage">
+          <ProfilePage />
+        </Route>
+      </React.Fragment>;
+    } else {
+      return <React.Fragment>
+
+      </React.Fragment>;
+    }
+  }
   return (
     <div>
       <Header
@@ -38,16 +51,11 @@ function App() {
         <Route exact path="/movieSearch">
           <MovieSearch isLoggedIn={isLoggedIn} />
         </Route>
-        {isLoggedIn && (
-          <React.Fragment>
-            <Route exact path="/profilePage">
-              <ProfilePage />
-            </Route>
-          </React.Fragment>
-        )}
         <Route exact path="/topMovies">
           <TopMovies />
         </Route>
+        <LoginRoute />
+        
         <Route>
           <NoMatch />
         </Route>
@@ -211,24 +219,24 @@ function MovieSearch({ isLoggedIn }) {
       Upvote
     </button>
   ) : (
-    <button onClick={upvote}>Upvote</button>
-  );
+      <button onClick={upvote}>Upvote</button>
+    );
 
   const downVoteButton = isDownvoted ? (
     <button disabled="disabled" onClick={downvote}>
       Upvote
     </button>
   ) : (
-    <button onClick={downvote}>Downvote</button>
-  );
+      <button onClick={downvote}>Downvote</button>
+    );
 
   const savedMovie = isSaved ? (
     <button disabled="disabled" onClick={addToSaved}>
       Saved
     </button>
   ) : (
-    <button onClick={addToSaved}> Save </button>
-  );
+      <button onClick={addToSaved}> Save </button>
+    );
 
   const toShow = data ? (
     <div className="SearchResults">
@@ -289,8 +297,8 @@ function MovieSearch({ isLoggedIn }) {
       </div>
     </div>
   ) : (
-    ""
-  );
+      ""
+    );
 
   return (
     <div>
@@ -335,8 +343,8 @@ function TopMovies() {
       ))}
     </div>
   ) : (
-    "Loading..."
-  );
+      "Loading..."
+    );
 
   return (
     <div className="App">
