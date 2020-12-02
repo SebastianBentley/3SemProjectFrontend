@@ -36,7 +36,7 @@ function App() {
           />
         </Route>
         <Route exact path="/movieSearch">
-          <MovieSearch />
+          <MovieSearch isLoggedIn={isLoggedIn} />
         </Route>
         {isLoggedIn && (
           <React.Fragment>
@@ -113,7 +113,7 @@ function Home() {
   );
 }
 
-function MovieSearch() {
+function MovieSearch({ isLoggedIn }) {
   const [data, setData] = useState(null);
   const [votes, setVotes] = useState({ upvotes: 0, downvotes: 0 });
   const { strategy } = useParams();
@@ -130,7 +130,7 @@ function MovieSearch() {
   function handleSubmit(event) {
     event.preventDefault();
     setData(null);
-    setVotes(null);
+    setVotes({ upvotes: 0, downvotes: 0 });
 
     facade
       .fetchMovieData(movieTitle)
@@ -184,7 +184,7 @@ function MovieSearch() {
   function addToSaved(event) {
     event.preventDefault();
     facade
-      .saveMovie(user, movieTitle)
+      .saveMovie(localStorage.getItem("username"), movieTitle)
       .then()
       .catch((err) => {
         if (err.status) {
@@ -215,9 +215,11 @@ function MovieSearch() {
   );
 
   const savedMovie = isSaved ? (
-    <button onClick={addToSaved}>Save</button>
+    <button disabled="disabled" onClick={addToSaved}>
+      Saved
+    </button>
   ) : (
-    <button onClick={addToSaved}> Saved </button>
+    <button onClick={addToSaved}> Save </button>
   );
 
   const toShow = data ? (
@@ -248,9 +250,14 @@ function MovieSearch() {
         <p>
           <b>User Rating: </b> yay: {votes.upvotes} nay: {votes.downvotes}
         </p>
-        {upVoteButton}
-        {downVoteButton}
-        {savedMovie}
+        {isLoggedIn && (
+          <React.Fragment>
+            {upVoteButton}
+            {downVoteButton}
+            {savedMovie}
+          </React.Fragment>
+        )}
+
         <p>
           <b>Ratings:</b>{" "}
         </p>
