@@ -117,6 +117,10 @@ function apiFacade() {
       handleHttpErrors
     );
   };
+  const getTopMovies = () => {
+    const options = makeOptions("GET", true);
+    return fetch(URL + "/api/movie/top5", options).then(handleHttpErrors);
+  };
 
   return {
     makeOptions,
@@ -132,6 +136,7 @@ function apiFacade() {
     downvote,
     getVotes,
     saveMovie,
+    getTopMovies,
   };
 }
 const facade = apiFacade();
