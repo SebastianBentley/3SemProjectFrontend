@@ -35,8 +35,8 @@ export default function MovieSearch({ isLoggedIn }) {
             })
     }
 
-    function loadUserRating(title) {
-        facade.getVotes(title).then((res) => setVotes(res)).then().catch((err) => {
+    function loadUserRating() {
+        facade.getVotes(data.Title).then((res) => setVotes(res)).then().catch((err) => {
             if (err.status) {
                 console.log(err.message);
             }
@@ -118,12 +118,11 @@ export default function MovieSearch({ isLoggedIn }) {
         );
 
     const toShow = data ? (
-        <div className="SearchResults">
+        <div className="SearchResults" onLoad={loadUserRating}>
             <h3>{
                 data.Title
-                
             }</h3>
-            {loadUserRating(data.Title)}
+            
             <div className="SearchRes1">
                 <p>
                     <b>Year:</b>
