@@ -1,14 +1,13 @@
 import "./App.css";
-import React, { useState, useEffect } from "react";
+import React, {useState, useEffect} from "react";
 import facade from "./apiFacade";
-export default function MovieSearch({ isLoggedIn }) {
+export default function MovieSearch({isLoggedIn}) {
     const [data, setData] = useState(null);
-    const [votes, setVotes] = useState({ upvotes: 0, downvotes: 0 });
+    const [votes, setVotes] = useState({upvotes: 0, downvotes: 0});
     const [movieTitle, setMovieTitle] = useState("");
     const [isUpvoted, setIsUpvoted] = useState(false);
     const [isDownvoted, setIsDownvoted] = useState(false);
     const [isSaved, setIsSaved] = useState(false);
-
 
 
     function handleChange(event) {
@@ -22,17 +21,13 @@ export default function MovieSearch({ isLoggedIn }) {
     function handleSubmit(event) {
         event.preventDefault();
         setData(null);
-        setVotes({ upvotes: 0, downvotes: 0 });
+        setVotes({upvotes: 0, downvotes: 0});
 
-        facade.fetchMovieData(movieTitle).then((res) => setData(res))
-            .then()
-            
-    
-            .catch((err) => {
-                if (err.status) {
-                    console.log(err.message);
-                }
-            })
+        facade.fetchMovieData(movieTitle).then((res) => setData(res)).then().catch((err) => {
+            if (err.status) {
+                console.log(err.message);
+            }
+        })
     }
 
     function loadUserRating() {
@@ -42,9 +37,6 @@ export default function MovieSearch({ isLoggedIn }) {
             }
         });
     }
-
-
-
 
 
     function upvote(event) {
@@ -88,14 +80,14 @@ export default function MovieSearch({ isLoggedIn }) {
     const upVoteButton = isUpvoted ? (
         <button disabled="disabled"
             style={
-                { backgroundColor: "lightgreen" }
+                {backgroundColor: "lightgreen"}
             }
             onClick={upvote}>
             Upvote
         </button>
     ) : (
-            <button onClick={upvote}>Upvote</button>
-        );
+        <button onClick={upvote}>Upvote</button>
+    );
 
     const downVoteButton = isDownvoted ? (
         <button disabled="disabled"
@@ -103,8 +95,8 @@ export default function MovieSearch({ isLoggedIn }) {
             Upvote
         </button>
     ) : (
-            <button onClick={downvote}>Downvote</button>
-        );
+        <button onClick={downvote}>Downvote</button>
+    );
 
     const savedMovie = isSaved ? (
         <button disabled="disabled"
@@ -112,48 +104,49 @@ export default function MovieSearch({ isLoggedIn }) {
             Saved
         </button>
     ) : (
-            <button onClick={addToSaved}>
-                Save
-            </button>
-        );
+        <button onClick={addToSaved}>
+            Save
+        </button>
+    );
 
     const toShow = data ? (
-        <div className="SearchResults" onLoad={loadUserRating}>
+        <div className="SearchResults"
+            onLoad={loadUserRating}>
             <h3>{
                 data.Title
             }</h3>
-            
+
             <div className="SearchRes1">
                 <p>
                     <b>Year:</b>
                     {
-                        data.Year
-                    } </p>
+                    data.Year
+                } </p>
                 <p>
                     <b>Genre:</b>
                     {
-                        data.Genre
-                    } </p>
+                    data.Genre
+                } </p>
                 <p>
                     <b>Directors:</b>
                     {
-                        data.Director
-                    } </p>
+                    data.Director
+                } </p>
                 <p>
                     <b>Writers:</b>
                     {
-                        data.Writer
-                    } </p>
+                    data.Writer
+                } </p>
                 <p>
                     <b>Actors:</b>
                     {
-                        data.Actors
-                    } </p>
+                    data.Actors
+                } </p>
                 <p>
                     <b>Description:</b>
                     {
-                        data.Plot
-                    } </p>
+                    data.Plot
+                } </p>
             </div>
             <div className="SearchRes2">
                 <img src={
@@ -163,55 +156,56 @@ export default function MovieSearch({ isLoggedIn }) {
                     <b>User Rating:
                     </b>
                     yay: {
-                        votes.upvotes
-                    }{" "}
-                    nay: {
-                        votes.downvotes
-                    } </p>
-                {
-                    isLoggedIn && (
-                        <React.Fragment> {upVoteButton}
-                            {downVoteButton}
-                            {savedMovie} </React.Fragment>
-                    )
+                    votes.upvotes
                 }
+                    {" "}
+                    nay: {
+                    votes.downvotes
+                } </p>
+                {
+                isLoggedIn && (
+                    <React.Fragment> {upVoteButton}
+                        {downVoteButton}
+                        {savedMovie} </React.Fragment>
+                )
+            }
 
                 <p>
                     <b>Ratings:</b>
                     {" "} </p>
                 {
-                    data.Ratings.map((x) => (
-                        <p key={
+                data.Ratings.map((x) => (
+                    <p key={
+                        x.Source
+                    }>
+                        <b>{
                             x.Source
-                        }>
-                            <b>{
-                                x.Source
-                            }</b>
+                        }</b>
                         : {
-                                x.Value
-                            } </p>
-                    ))
-                }
+                        x.Value
+                    } </p>
+                ))
+            }
                 <p>
                     <b>Metascore:</b>
                     {
-                        data.Metascore
-                    } </p>
+                    data.Metascore
+                } </p>
                 <p>
                     <b>imdbRating:</b>
                     {
-                        data.imdbRating
-                    } </p>
+                    data.imdbRating
+                } </p>
                 <p>
                     <b>imdbVotes:</b>
                     {
-                        data.imdbVotes
-                    } </p>
+                    data.imdbVotes
+                } </p>
                 <p>
                     <b>imdbID:</b>
                     {
-                        data.imdbID
-                    } </p>
+                    data.imdbID
+                } </p>
             </div>
         </div>
     ) : ("");
@@ -222,7 +216,7 @@ export default function MovieSearch({ isLoggedIn }) {
                 <h2>Movie Search</h2>
                 <input placeholder="Movie title" id="movieSearch"
                     value={movieTitle}
-                    onChange={handleChange} />
+                    onChange={handleChange}/>
                 <button onClick={handleSubmit}>Search</button>
             </form>
             {toShow} </div>

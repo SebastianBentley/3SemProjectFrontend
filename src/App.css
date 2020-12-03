@@ -57,6 +57,10 @@ h3 {
   text-align: center;
 }
 
+.h3 {
+  text-align: left;
+}
+
 .SearchRes1 {
   float: left;
   width: 50%;
@@ -65,4 +69,13 @@ h3 {
   float: right;
   text-align: right;
   width: 50%;
+}
+
+.ProfilePageHeadline {
+  text-align: center;
+}
+
+.ProfilePageMovies {
+  float: right;
+  margin-right: 25%
 }
