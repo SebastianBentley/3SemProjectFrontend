@@ -107,6 +107,14 @@ function apiFacade() { /* Insert utility-methods from a latter step (d) here (RE
         return fetch(URL + "/api/info/user/getsavedlist/" + username, options).then(handleHttpErrors);
     };
 
+    const changeUserPassword = (user, newPassword) => {
+        const options = makeOptions("POST", true, {
+            username: user,
+            password: newPassword
+        });
+        return fetch(URL + "/api/info/user/changepassword/", options).then(handleHttpErrors);
+    }
+
     return {
         makeOptions,
         setToken,
@@ -122,7 +130,8 @@ function apiFacade() { /* Insert utility-methods from a latter step (d) here (RE
         getVotes,
         saveMovie,
         getTopMovies,
-        getSavedList
+        getSavedList,
+        changeUserPassword
     };
 }
 const facade = apiFacade();
