@@ -4,7 +4,6 @@ import facade from "./apiFacade";
 
 export default function AdminPage() {
   const [data, setData] = useState(null);
-  const [table, setTable] = useState(null);
 
   useEffect(() => {
     setData(null);
@@ -18,28 +17,50 @@ export default function AdminPage() {
       });
   }, []);
 
-  const showTable = () => {
-    console.log("lol")
-    setTable(data.map(x =>
-      <tr key={x.username}>
-        <td>{x.username}</td>
-        <td><a href="#" id={x.username} onClick={deleteUser}>Delete</a></td>
-      </tr>
-    ))
-  }
 
-  const deleteUser = (event) => {
+
+  /*   const showTable = () => {
+      facade
+        .getAllUsers()
+        .then((res) => setData(res))
+        .catch((err) => {
+          if (err.status) {
+            console.log(err.message);
+          }
+        });
+    } */
+
+    function sleep(ms){
+      return new Promise(
+        resolve => setTimeout(resolve, ms)
+      );
+    }
+
+  async function deleteUser(event) {
+    event.preventDefault();
     var value = event.target.id;
     facade.deleteUser(value).catch((err) => {
       if (err.status) {
         console.log(err.message);
       }
     })
+
+    await(sleep(500))
+    facade
+      .getAllUsers()
+      .then((res) => setData(res))
+      .catch((err) => {
+        if (err.status) {
+          console.log(err.message);
+        }
+      });
   }
 
 
 
+
   const toShow = data ? (
+
     <div className="container" >
       <table className="table" >
         <thead>
@@ -49,7 +70,11 @@ export default function AdminPage() {
           </tr>
         </thead>
         <tbody>
-          {table}
+          {data.map(x =>
+            <tr key={x.username}>
+              <td>{x.username}</td>
+              <td><a href="#" id={x.username} onClick={deleteUser}>Delete</a></td>
+            </tr>)}
         </tbody>
       </table>
     </div>
