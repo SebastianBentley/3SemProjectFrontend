@@ -4,6 +4,7 @@ import facade from "./apiFacade";
 
 export default function AdminPage() {
   const [data, setData] = useState(null);
+  const [table, setTable] = useState(null);
 
   useEffect(() => {
     setData(null);
@@ -17,45 +18,47 @@ export default function AdminPage() {
       });
   }, []);
 
+  const showTable = () => {
+    console.log("lol")
+    setTable(data.map(x =>
+      <tr key={x.username}>
+        <td>{x.username}</td>
+        <td><a href="#" id={x.username} onClick={deleteUser}>Delete</a></td>
+      </tr>
+    ))
+  }
+
+  const deleteUser = (event) => {
+    var value = event.target.id;
+    facade.deleteUser(value).catch((err) => {
+      if (err.status) {
+        console.log(err.message);
+      }
+    })
+  }
+
+
+
   const toShow = data ? (
-    <div class="container">
-      <table class="table">
+    <div className="container" >
+      <table className="table" >
         <thead>
           <tr>
-            <th scope="col">#</th>
-            <th scope="col">First</th>
-            <th scope="col">Last</th>
-            <th scope="col">Handle</th>
+            <th scope="col">Name</th>
+            <th scope="col">Delete</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <th scope="row">1</th>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>@mdo</td>
-          </tr>
-          <tr>
-            <th scope="row">2</th>
-            <td>Jacob</td>
-            <td>Thornton</td>
-            <td>@fat</td>
-          </tr>
-          <tr>
-            <th scope="row">3</th>
-            <td>Larry</td>
-            <td>the Bird</td>
-            <td>@twitter</td>
-          </tr>
+          {table}
         </tbody>
       </table>
     </div>
   ) : (
-    "Loading..."
-  );
-  console.log("Henrik er gay");
+      "Loading..."
+    );
+
   return (
-    <div>
+    <div >
       <h2> Info </h2>
       <div> {toShow} </div>
     </div>

@@ -29,32 +29,7 @@ function App() {
       setIsAdmin(facade.checkRole());
     }
   }, [isLoggedIn]);
-  const LoginRoute = () => {
-    if (isLoggedIn) {
-      return (
-        <React.Fragment>
-          <Route exact path="/profilePage">
-            <ProfilePage />
-          </Route>
-        </React.Fragment>
-      );
-    } else {
-      return <React.Fragment></React.Fragment>;
-    }
-  };
-  const AdminRoute = () => {
-    if (isAdmin) {
-      return (
-        <React.Fragment>
-          <Route exact path="/adminPage">
-            <AdminPage />
-          </Route>
-        </React.Fragment>
-      );
-    } else {
-      return <React.Fragment></React.Fragment>;
-    }
-  };
+  
   return (
     <div>
       <Header
@@ -79,9 +54,18 @@ function App() {
         <Route exact path="/topMovies">
           <TopMovies />
         </Route>
-        <LoginRoute />
-        <AdminRoute />
+      
+        {isLoggedIn &&
+          <Route exact path="/profilePage">
+            <ProfilePage />
+          </Route>
+        }
 
+        {isAdmin &&
+          <Route exact path="/adminPage">
+            <AdminPage />
+          </Route>
+        }
         <Route>
           <NoMatch />
         </Route>
@@ -89,6 +73,7 @@ function App() {
     </div>
   );
 }
+
 
 function Header({ isLoggedIn, loginMsg, isAdmin }) {
   return (

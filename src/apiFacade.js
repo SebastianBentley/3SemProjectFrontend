@@ -142,10 +142,16 @@ function apiFacade() {
       handleHttpErrors
     );
   };
+
   const getAllUsers = () => {
     const options = makeOptions("GET", true);
     return fetch(URL + "/api/admin/allUsers/", options).then(handleHttpErrors);
   };
+
+  const deleteUser = (username) => {
+    const options = makeOptions("POST", true);
+    return fetch(URL + "/api/admin/deleteuser/" + username, options).then(handleHttpErrors);
+  }
 
   return {
     makeOptions,
@@ -166,6 +172,7 @@ function apiFacade() {
     changeUserPassword,
     getAllUsers,
     checkRole,
+    deleteUser
   };
 }
 const facade = apiFacade();

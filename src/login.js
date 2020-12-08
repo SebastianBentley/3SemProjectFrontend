@@ -83,7 +83,7 @@ function LogIn({ login, registerUser }) {
       <h2>Login</h2>
       <form onChange={onChange}>
         <input placeholder="User Name" id="username" />
-        <input placeholder="Password" id="password" />
+        <input placeholder="Password" id="password" type="password"/>
         <button onClick={performLogin}>Login</button>
         <button onClick={performRegister}>New User</button>
       </form>
