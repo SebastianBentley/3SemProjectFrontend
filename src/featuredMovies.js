@@ -64,21 +64,26 @@ export default function FeaturedMovies() {
             <h2>{
                 data.gotName
             }</h2><br/>
-            <h1>{
+            <h1>Region:</h1>
+            <h2>{
                 data.gotRegion
-            }</h1>
-            <h1>{
+            }</h2><br/>
+            <h1>Coat:</h1>
+            <h2>{
                 data.gotCoat
-            }</h1>
-            <h1>{
+            }</h2><br/>
+            <h1>Founded:</h1>
+            <h2>{
                 data.gotFounded
-            }</h1>
-            <h1>{
+            }</h2><br/>
+            <h1>Founder:</h1>
+            <h2>{
                 data.gotFounder
-            }</h1>
-            <h1>{
+            }</h2><br/>
+            <h1>Died out:</h1>
+            <h2>{
                 data.gotDiedout
-            }</h1>
+            }</h2><br/>
         </div>
     ) : ("Loading...");
 
