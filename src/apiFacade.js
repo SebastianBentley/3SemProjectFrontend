@@ -150,8 +150,15 @@ function apiFacade() {
 
   const deleteUser = (username) => {
     const options = makeOptions("POST", true);
-    return fetch(URL + "/api/admin/deleteuser/" + username, options).then(handleHttpErrors);
-  }
+    return fetch(URL + "/api/admin/deleteuser/" + username, options).then(
+      handleHttpErrors
+    );
+  };
+
+  const getFeaturedMovies = () => {
+    const options = makeOptions("GET", true);
+    return fetch(URL + "/api/movie/extern", options).then(handleHttpErrors);
+  };
 
   return {
     makeOptions,
@@ -172,7 +179,8 @@ function apiFacade() {
     changeUserPassword,
     getAllUsers,
     checkRole,
-    deleteUser
+    deleteUser,
+    getFeaturedMovies,
   };
 }
 const facade = apiFacade();

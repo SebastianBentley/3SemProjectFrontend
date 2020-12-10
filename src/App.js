@@ -15,6 +15,7 @@ import MovieSearch from "./movieSearch.js";
 import TopMovies from "./topMovies.js";
 import ProfilePage from "./profilePage.js";
 import AdminPage from "./adminPage.js";
+import FeaturedMovies from "./featuredMovies.js";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
@@ -29,7 +30,7 @@ function App() {
       setIsAdmin(facade.checkRole());
     }
   }, [isLoggedIn]);
-  
+
   return (
     <div>
       <Header
@@ -54,18 +55,21 @@ function App() {
         <Route exact path="/topMovies">
           <TopMovies />
         </Route>
-      
-        {isLoggedIn &&
+
+        {isLoggedIn && (
           <Route exact path="/profilePage">
             <ProfilePage />
           </Route>
-        }
+        )}
 
-        {isAdmin &&
+        {isAdmin && (
           <Route exact path="/adminPage">
             <AdminPage />
           </Route>
-        }
+        )}
+        <Route exact path="/featuredMovies">
+          <FeaturedMovies />
+        </Route>
         <Route>
           <NoMatch />
         </Route>
@@ -73,7 +77,6 @@ function App() {
     </div>
   );
 }
-
 
 function Header({ isLoggedIn, loginMsg, isAdmin }) {
   return (
@@ -99,6 +102,11 @@ function Header({ isLoggedIn, loginMsg, isAdmin }) {
       <li>
         <NavLink activeClassName="active" to="/topMovies">
           Top Movies
+        </NavLink>
+      </li>
+      <li>
+        <NavLink activeClassName="active" to="/featuredMovies">
+          Featured Movies
         </NavLink>
       </li>
       <li>
