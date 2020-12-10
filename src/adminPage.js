@@ -59,7 +59,7 @@ export default function AdminPage() {
 
 
 
-  const toShow = data ? (
+  const toShow = data ? ( 
 
     <div className="container" >
       <table className="table" >

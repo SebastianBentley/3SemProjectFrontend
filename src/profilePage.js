@@ -1,5 +1,5 @@
 import "./App.css";
-import React, { useState, useEffect } from "react";
+import React, {useState, useEffect} from "react";
 import facade from "./apiFacade";
 
 export default function ProfilePage() {
@@ -37,26 +37,26 @@ export default function ProfilePage() {
 
     const toShow = data ? (<div className="SearchResults">
         <div className="SearchRes1">
-            <br />
+            <br/>
             Change password:
-            <br />
+            <br/>
             <input placeholder="New password" id="passwordChange"
                 value={newPassword}
-                onChange={handleChangePassword} />
+                onChange={handleChangePassword}/>
             <button onClick={handleSubmitChangePassword}>Submit</button>
             {toShowPasswordChanged} </div>
         <div className="SearchRes2">
             <h1 className="h3">Your favorite movies:</h1>
             {
-                data.map((x) => (<h3 className="h3"
-                    key={
-                        x.Title
-                    }>
-                    <b> {
-                        x.Title
-                    }</b>
-                </h3>))
-            } </div>
+            data.map((x) => (<h3 className="h3"
+                key={
+                    x.Title
+            }>
+                <b> {
+                    x.Title
+                }</b>
+            </h3>))
+        } </div>
     </div>) : ("Loading...");
 
 
