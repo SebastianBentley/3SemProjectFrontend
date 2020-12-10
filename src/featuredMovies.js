@@ -79,7 +79,7 @@ export default function FeaturedMovies() {
             <h1>Founder:</h1>
             <h2>{
                 data.gotFounder
-            }</h2><br/>
+            }</h2><br/> 
             <h1>Died out:</h1>
             <h2>{
                 data.gotDiedout
