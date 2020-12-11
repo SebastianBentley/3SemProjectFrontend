@@ -16,6 +16,7 @@ import TopMovies from "./topMovies.js";
 import ProfilePage from "./profilePage.js";
 import AdminPage from "./adminPage.js";
 import FeaturedMovies from "./featuredMovies.js";
+import AppFile from "./app-debug.apk";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
@@ -122,7 +123,7 @@ function Header({ isLoggedIn, loginMsg, isAdmin }) {
         </li>
       )}
       <li style={{ float: "right", margin: "10px" }}>
-        <form method="get" action="file.doc">
+        <form method="get" action={AppFile}>
           <button className="btn-primary" type="submit">
             Get the app here!
           </button>
