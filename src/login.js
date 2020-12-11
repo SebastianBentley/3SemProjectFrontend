@@ -62,7 +62,7 @@ function LogIn({ login, registerUser }) {
 
   const performLogin = (evt) => {
     evt.preventDefault();
-    /*    localStorage.setItem("username", loginCredentials.username); */
+    localStorage.setItem("username", loginCredentials.username);
     login(loginCredentials.username, loginCredentials.password);
   };
 
